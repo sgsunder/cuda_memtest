@@ -3,7 +3,7 @@
 #  University of Illinois/NCSA
 #  #  Open Source License
 #  
-#  #  Copyright © 2009,    University of Illinois.  All rights reserved.
+#  #  Copyright Â© 2009,    University of Illinois.  All rights reserved.
 #  
 #  #  Developed by:
 #  
@@ -57,6 +57,7 @@ CUDALIB := -L${CUDA_INSTALL_PATH}/lib64 -lcuda  -lcudart -lpthread
 CFLAGS= -arch sm_13 -DSM_13 -O3
 CFLAGS_SM10= -arch sm_10 -DSM_10 -O3
 CFLAGS_SM20= -arch sm_20 -DSM_20 -O3
+CFLAGS_SM61= -arch sm_61 -DSM_61 -O3
 CUDA_SRC_FILES= cuda_memtest.cu misc.cpp tests.cu
 CUDA_OBJS=  cuda_memtest.o misc.o tests.o
 
@@ -69,7 +70,7 @@ OCL_OBJS= ocl_memtest.o ocl_tests.o
 OCL_LDFLAGS= -lpthread -lOpenCL -L${AMD_OPENCL_LIB_DIR} -L${NVIDIA_OPENCL_LIB_DIR}
 
 default: ${TARGET}
-all: ${TARGET} cuda_memtest_sm10 cuda_memtest_sm20
+all: ${TARGET} cuda_memtest_sm10 cuda_memtest_sm20 cuda_memtest_sm61
 .SUFFIXES: .o .cu .cpp
 .cu.o:
 	${CUDACC} -c ${CFLAGS}  ${CUDA_INCLUDES} -o $@ $<
@@ -96,6 +97,11 @@ cuda_memtest_sm20: ${SRCS}
 	${CUDACC} -c ${CFLAGS_SM20}  ${CUDA_INCLUDES} -o tests.o tests.cu
 	${CUDACC} -c ${CFLAGS_SM20}  ${CUDA_INCLUDES} -o misc.o misc.cpp
 	${CUDACC} -c ${CFLAGS_SM20}  ${CUDA_INCLUDES} -o cuda_memtest.o cuda_memtest.cu
+	${CUDACC}  -o  $@ ${CUDA_OBJS} ${CUDALIB}
+cuda_memtest_sm61: ${SRCS}
+	${CUDACC} -c ${CFLAGS_SM61}  ${CUDA_INCLUDES} -o tests.o tests.cu
+	${CUDACC} -c ${CFLAGS_SM61}  ${CUDA_INCLUDES} -o misc.o misc.cpp
+	${CUDACC} -c ${CFLAGS_SM61}  ${CUDA_INCLUDES} -o cuda_memtest.o cuda_memtest.cu
 	${CUDACC}  -o  $@ ${CUDA_OBJS} ${CUDALIB}
 clean:	
 	rm -fr *.o ${TARGET} *~ *.linkinfo cuda_memtest_sm10 cuda_memtest_sm20
