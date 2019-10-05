@@ -48,6 +48,10 @@
 #include <csignal>
 
 #define MAX_NUM_GPUS 8
+#if !defined(ENABLE_NVML)
+    #define ENABLE_NVML 0
+#endif
+
 bool useMappedMemory;
 void* mappedHostPtr;
 char hostname[64];
