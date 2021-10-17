@@ -54,7 +54,7 @@ CUDACC=nvcc
 
 CUDA_INCLUDES := -I. -I${CUDA_INSTALL_PATH}/include 
 CUDALIB := -L${CUDA_INSTALL_PATH}/lib64 -lcuda  -lcudart -lpthread
-CFLAGS= -arch sm_13 -DSM_13 -O3
+CFLAGS= -arch sm_50 -DSM_50 -O3
 CFLAGS_SM10= -arch sm_10 -DSM_10 -O3
 CFLAGS_SM20= -arch sm_20 -DSM_20 -O3
 CFLAGS_SM61= -arch sm_61 -DSM_61 -O3
